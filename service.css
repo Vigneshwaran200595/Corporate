@@ -136,7 +136,7 @@
     }
     .hero {
         height: auto;                 /* allow natural height */
-        min-height: 100vh;            /* full screen on phones */
+        min-height: 60vh;            /* full screen on phones */
         padding: 120px 0 60px;        /* space for header */
         position: relative;
         overflow: hidden;
