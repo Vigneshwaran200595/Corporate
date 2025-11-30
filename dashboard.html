@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Corporate Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* BODY */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f4f6ff;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1e3c72, #2a5298, #3498db);
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: #fff;
+    padding: 25px 0;
+}
+
+.sidebar .logo-box {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.sidebar .logo-box img {
+    width: 180px;
+    margin-left: -50px;
+}
+
+.sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 15px 25px;
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255,255,255,0.15);
+    border-left: 4px solid #f1c40f;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Hover style */
+.sidebar ul li:hover a {
+    color: #f1c40f;
+}
+
+/* Active link style */
+.sidebar ul li.active a {
+    color: #f1c40f;
+    font-weight: 600;
+}
+
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 270px;
+    padding: 25px;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(90deg, #3498db, #1e3c72);
+    padding: 25px;
+    border-radius: 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left h2 {
+    font-size: 26px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.home-btn {
+    background: #ff4b2b;
+    padding: 10px 18px;
+    border-radius: 25px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.home-btn:hover {
+    background: linear-gradient(90deg, #ff6a3d, #ff3b2d);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 76, 43, 0.4);
+}
+
+
+.profile-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-box img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+/* CARDS */
+.cards {
+    margin-top: 30px;
+    display: flex;
+    gap: 25px;
+}
+
+.card {
+    flex: 1;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    font-size: 17px;
+}
+
+.card .number {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+/* CHARTS GRID */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.chart-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.chart-box h3 {
+    margin-bottom: 15px;
+}
+
+
+/* ---------- MOBILE SIDEBAR TOGGLE ---------- */
+
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Overlay for mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    z-index: 998;
+}
+
+/* Sidebar open state */
+.sidebar.open {
+    left: 0;
+    z-index: 999;
+}
+
+/* Responsive Rules */
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        left: -260px;
+        width: 240px;
+        height: 100%;
+        transition: 0.3s ease;
+        position: fixed;
+        top: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: left;
+        gap: 15px;
+    }
+
+    .header-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo-box">
+        <img src="Images/logo.webp">
+    </div>
+<ul>
+    <li class="active">
+        <a href="dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="reports.html">
+            <i class="fa-solid fa-file-lines"></i> Reports
+        </a>
+    </li>
+
+    <li>
+        <a href="analytics.html">
+            <i class="fa-solid fa-chart-pie"></i> Analytics
+        </a>
+    </li>
+
+    <li>
+        <a href="projects.html">
+            <i class="fa-solid fa-users"></i> Projects
+        </a>
+    </li>
+
+    <li>
+        <a href="users.html">
+            <i class="fa-solid fa-gear"></i> Users
+        </a>
+    </li>
+</ul>
+
+</div>
+
+<div class="sidebar-overlay"></div>
+
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <h2>Dashboard Overview</h2>
+        </div>
+
+        <div class="header-right">
+            <div class="menu-toggle" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</div>
+            <a href="index.html" class="home-btn">Home</a>
+
+            <div class="profile-box">
+                <span>Admin</span>
+                <img src="Images/u2.webp">
+            </div>
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card"><h3>Total Users</h3><div class="number">24,560</div></div>
+        <div class="card"><h3>Revenue</h3><div class="number">$18,430</div></div>
+        <div class="card"><h3>Tickets</h3><div class="number">78</div></div>
+        <div class="card"><h3>Sales</h3><div class="number">$6,840</div></div>
+    </div>
+
+    <!-- CHARTS GRID -->
+    <div class="chart-grid">
+
+        <!-- Line Chart -->
+        <div class="chart-box">
+            <h3>Line Chart</h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="chart-box">
+            <h3>Bar Chart</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="chart-box">
+            <h3>Pie Chart</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+        <!-- Doughnut Chart -->
+        <div class="chart-box">
+            <h3>Doughnut Chart</h3>
+            <canvas id="doughnutChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+<script>
+/* Line Chart */
+new Chart(document.getElementById("lineChart"), {
+    type: "line",
+    data: {
+        labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+        datasets: [{
+            label: "Sales",
+            data: [12000,15000,11000,18000,22000,26000],
+            borderColor: "#3498db",
+            backgroundColor: "rgba(52,152,219,0.25)",
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: { plugins:{legend:{display:false}} }
+});
+
+/* Bar Chart */
+new Chart(document.getElementById("barChart"), {
+    type: "bar",
+    data: {
+        labels: ["Mon","Tue","Wed","Thu","Fri"],
+        datasets: [{
+            label: "Visitors",
+            data: [280,340,450,390,510],
+            backgroundColor: ["#3498db","#1e3c72","#ff4b2b","#f1c40f","#2a5298"]
+        }]
+    },
+    options: { plugins:{legend:{display:false}} }
+});
+
+/* Pie Chart */
+new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: ["Chrome", "Firefox", "Safari", "Edge"],
+        datasets: [{
+            data: [55, 25, 15, 5],
+            backgroundColor: ["#3498db","#ff4b2b","#f1c40f","#1e3c72"]
+        }]
+    }
+});
+
+/* Doughnut Chart */
+new Chart(document.getElementById("doughnutChart"), {
+    type: "doughnut",
+    data: {
+        labels: ["Active", "Inactive"],
+        datasets: [{
+            data: [80, 20],
+            backgroundColor: ["#2a5298", "#f1c40f"]
+        }]
+    }
+});
+</script>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    
+    sidebar.classList.toggle('open');
+    overlay.style.display = sidebar.classList.contains('open') ? "block" : "none";
+}
+
+document.addEventListener("click", function(e){
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    if (e.target === overlay) {
+        sidebar.classList.remove("open");
+        overlay.style.display = "none";
+    }
+});
+</script>
+
+
+
+</body>
+</html>

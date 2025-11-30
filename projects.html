@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects | Stackly Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* BODY */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f4f6ff;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1e3c72, #2a5298, #3498db);
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: #fff;
+    padding: 25px 0;
+}
+
+.sidebar .logo-box {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.sidebar .logo-box img {
+    width: 180px;
+    margin-left: -50px;
+}
+
+.sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 15px 25px;
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar ul li:hover {
+    background: rgba(255,255,255,0.15);
+    border-left: 4px solid #f1c40f;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Hover style */
+.sidebar ul li:hover a {
+    color: #f1c40f;
+}
+
+/* Active link style */
+.sidebar ul li.active a {
+    color: #f1c40f;
+    font-weight: 600;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 270px;
+    padding: 25px;
+}
+
+/* HEADER */
+.header {
+    background: linear-gradient(90deg, #3498db, #1e3c72);
+    padding: 25px;
+    border-radius: 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left h2 {
+    font-size: 26px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.home-btn {
+    background: #ff4b2b;
+    padding: 10px 18px;
+    border-radius: 25px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.home-btn:hover {
+    background: linear-gradient(90deg, #ff6a3d, #ff3b2d);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(255, 76, 43, 0.4);
+}
+
+.profile-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-box img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+/* SUMMARY CARDS */
+.cards {
+    margin-top: 30px;
+    display: flex;
+    gap: 25px;
+}
+
+.card {
+    flex: 1;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    font-size: 17px;
+}
+
+.card .number {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+
+/* PROJECT TABLE */
+.table-box {
+    margin-top: 35px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.table-box h3 {
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th {
+    background: #1e3c72;
+    color: #fff;
+    padding: 12px;
+    text-align: left;
+}
+
+table td {
+    background: #f9f9f9;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.completed { background: #2ecc71; }
+.progress   { background: #f1c40f; color: #000; }
+.pending    { background: #e74c3c; }
+
+/* CHARTS SECTION */
+.chart-section {
+    margin-top: 35px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.chart-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+}
+
+.chart-box h3 {
+    margin-bottom: 20px;
+}
+
+/* Make table scrollable on mobile */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.table-responsive table {
+    min-width: 650px; /* Ensures table structure stays intact */
+}
+
+@media (max-width: 480px) {
+    .table-responsive {
+        border-radius: 10px;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+}
+
+
+/* ============================================================
+   MOBILE & TABLET RESPONSIVE DESIGN (USERS PAGE)
+   ============================================================ */
+
+/* ----------- TABLET + MOBILE (max-width: 1024px) ----------- */
+@media (max-width: 1024px) {
+
+    /* Main content expands */
+    .main-content {
+        margin-left: 0;
+    }
+
+    /* Charts become single column */
+    .chart-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* -------------------- MOBILE (max-width: 768px) -------------------- */
+@media (max-width: 768px) {
+
+    /* Show toggle button */
+    .menu-toggle {
+        display: block;
+        font-size: 26px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Sidebar collapses */
+    .sidebar {
+        left: -260px;
+        width: 240px;
+        height: 100vh;
+        transition: 0.3s ease-in-out;
+        position: fixed;
+        top: 0;
+        z-index: 999;
+    }
+
+    /* When open */
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Background overlay */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,0.45);
+        z-index: 998;
+    }
+
+    /* Main content full width */
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    /* Header becomes vertical */
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .header-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Cards stack vertically */
+    .cards {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Table Responsive */
+    table th, table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    /* Charts stack */
+    .chart-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* -------------------- SMALL MOBILE (max-width: 480px) -------------------- */
+@media (max-width: 480px) {
+
+    /* Home button smaller */
+    .home-btn {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+
+    /* Profile image small */
+    .profile-box img {
+        width: 38px;
+        height: 38px;
+    }
+
+    /* Cards padding reduced */
+    .card {
+        padding: 20px;
+    }
+
+    .card h3 {
+        font-size: 15px;
+    }
+
+    .card .number {
+        font-size: 26px;
+    }
+
+    /* Chart boxes compact */
+    .chart-box {
+        padding: 20px;
+    }
+
+    .chart-box h3 {
+        font-size: 16px;
+    }
+
+    /* Table text smaller */
+    table th,
+    table td {
+        font-size: 13px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo-box">
+        <img src="Images/logo.webp">
+    </div>
+
+<ul>
+    <li>
+        <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    </li>
+
+    <li>
+        <a href="reports.html"><i class="fa-solid fa-file-lines"></i> Reports</a>
+    </li>
+
+    <li>
+        <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+    </li>
+
+    <li class="active">
+        <a href="projects.html"><i class="fa-solid fa-users"></i> Projects</a>
+    </li>
+
+    <li>
+        <a href="users.html"><i class="fa-solid fa-gear"></i> Users</a>
+    </li>
+</ul>
+</div>
+<div class="sidebar-overlay"></div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-left">
+            <h2>Projects Overview</h2>
+        </div>
+
+        <div class="header-right">
+            <div class="menu-toggle" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</div>
+            <a href="index.html" class="home-btn">Home</a>
+
+            <div class="profile-box">
+                <span>Admin</span>
+                <img src="Images/u2.webp">
+            </div>
+        </div>
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="cards">
+        <div class="card"><h3>Total Projects</h3><div class="number">135</div></div>
+        <div class="card"><h3>Completed</h3><div class="number">89</div></div>
+        <div class="card"><h3>In Progress</h3><div class="number">34</div></div>
+        <div class="card"><h3>Pending</h3><div class="number">12</div></div>
+    </div>
+
+    <!-- PROJECTS TABLE -->
+    <div class="table-box">
+        <h3>Project Status Table</h3>
+<div class="table-responsive">
+        <table>
+            <tr>
+                <th>Project Name</th>
+                <th>Manager</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Website Redesign</td>
+                <td>Rahul</td>
+                <td>10 Feb 2025</td>
+                <td><span class="status completed">Completed</span></td>
+            </tr>
+
+            <tr>
+                <td>App Development</td>
+                <td>Priya</td>
+                <td>22 Mar 2025</td>
+                <td><span class="status progress">In Progress</span></td>
+            </tr>
+
+            <tr>
+                <td>CRM Integration</td>
+                <td>Deepak</td>
+                <td>05 Apr 2025</td>
+                <td><span class="status pending">Pending</span></td>
+            </tr>
+
+            <tr>
+                <td>Marketing Campaign</td>
+                <td>Asha</td>
+                <td>18 Feb 2025</td>
+                <td><span class="status progress">In Progress</span></td>
+            </tr>
+
+        </table>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-section">
+
+        <!-- Project Completion Chart -->
+        <div class="chart-box">
+            <h3>Project Completion</h3>
+            <canvas id="projectChart"></canvas>
+        </div>
+
+        <!-- Task Distribution Chart -->
+        <div class="chart-box">
+            <h3>Task Distribution</h3>
+            <canvas id="taskChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART SCRIPTS -->
+<script>
+/* Project Completion (Bar Chart) */
+new Chart(document.getElementById("projectChart"), {
+    type: "bar",
+    data: {
+        labels: ["Completed", "In Progress", "Pending"],
+        datasets: [{
+            label: "Projects",
+            data: [89, 34, 12],
+            backgroundColor: ["#2ecc71", "#f1c40f", "#e74c3c"]
+        }]
+    },
+    options: { plugins:{legend:{display:false}} }
+});
+
+/* Task Distribution (Doughnut Chart) */
+new Chart(document.getElementById("taskChart"), {
+    type: "doughnut",
+    data: {
+        labels: ["Design", "Development", "Testing", "Deployment"],
+        datasets: [{
+            data: [35, 40, 15, 10],
+            backgroundColor: ["#3498db", "#1e3c72", "#f1c40f", "#ff4b2b"]
+        }]
+    }
+});
+</script>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    
+    sidebar.classList.toggle('open');
+    overlay.style.display = sidebar.classList.contains('open') ? "block" : "none";
+}
+
+document.addEventListener("click", function(e){
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    if (e.target === overlay) {
+        sidebar.classList.remove("open");
+        overlay.style.display = "none";
+    }
+});
+</script>
+
+
+
+</body>
+</html>
