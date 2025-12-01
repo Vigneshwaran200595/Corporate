@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found | Stackly</title>
+
+<style>
+/* GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: #0d0d0d; /* Pure dark background */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- ANIMATED PARTICLES ---- */
+/* UPDATED PARTICLES */
+.particle {
+    position: absolute;
+    width: 12px;                /* Increased size */
+    height: 12px;               /* Increased size */
+    background: rgba(252, 252, 252, 0.53);
+    border-radius: 50%;
+    filter: blur(2px);          /* Soft glow effect */
+    animation: moveParticle linear infinite;
+}
+
+/* SMOOTHER FULL-BACKGROUND MOVEMENT */
+@keyframes moveParticle {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-60vh) translateX(20px) scale(1.3);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-130vh) translateX(-20px) scale(1);
+        opacity: 0.4;
+    }
+}
+
+/* ---- MAIN WRAPPER ---- */
+.wrapper {
+    width: 420px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+    z-index: 10;
+}
+
+/* LOGO */
+.logo img {
+    width: 200px;
+    margin-bottom: 15px;
+}
+
+/* NEON 404 TEXT */
+h1 {
+    font-size: 120px;
+    color: transparent;
+    background: linear-gradient(90deg, #ff004f, #ff8c00);
+    -webkit-background-clip: text;
+    font-weight: 700;
+    animation: glow 1.5s ease-in-out infinite alternate,
+               float404 4s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 25px #ff004f; }
+    100% { text-shadow: 0 0 45px #ff8c00; }
+}
+
+@keyframes float404 {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+p {
+    color: #ccc;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* BUTTON */
+.home-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #ff004f;
+    color: white;
+    font-weight: 600;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.home-btn:hover {
+    background: #ff245f;
+    transform: translateY(-3px);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 480px) {
+    .wrapper {
+        width: 88%;
+        padding: 30px 20px;
+    }
+    h1 { font-size: 80px; }
+    p { font-size: 16px; }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="wrapper">
+    <div class="logo">
+        <a href="index.html" class="logo-link">
+    <img src="Images/logo.webp" alt="Logo">
+</a>
+
+    </div>
+
+    <h1>404</h1>
+    <p>Oops! The page you’re looking for isn't available.</p>
+
+    <a href="saas.html" class="home-btn">Back to Home</a>
+</div>
+
+
+<script>
+    for (let i = 0; i < 40; i++) {   // increased from 25 to 40
+    let particle = document.createElement("div");
+    particle.classList.add("particle");
+    document.body.appendChild(particle);
+
+    let size = Math.random() * 10 + 6;  // even more size range
+    particle.style.width = size + "px";
+    particle.style.height = size + "px";
+
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.top = Math.random() * 100 + "vh";
+
+    particle.style.animationDuration = (Math.random() * 8 + 5) + "s";
+}
+</script>
+</body>
+</html>
