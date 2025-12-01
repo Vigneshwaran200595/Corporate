@@ -257,6 +257,13 @@
     }
 }
 
+@media (max-width: 768px) {
+    .hero-left {
+        margin-top: 40px !important;
+        position: relative;
+        top: 40px;  /* THIS finally moves it */
+    }
+}
 
 /* ==============================
    CLEAN DROPDOWN MENU
