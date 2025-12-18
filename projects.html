@@ -3,389 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects | Stackly Dashboard</title>
+<title>Accounting & Finance Dashboard</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* BODY */
+/* ================= GLOBAL ================= */
+/* ================= GLOBAL ================= */
+* { box-sizing: border-box; }
+
 body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #f4f6ff;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg,#f5fbff,#eef6ff);
+  overflow-x: hidden;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: linear-gradient(180deg, #1e3c72, #2a5298, #3498db);
-    position: fixed;
-    left: 0;
-    top: 0;
-    color: #fff;
-    padding: 25px 0;
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background: linear-gradient(180deg, #ff3b2e, #7c3aed, #2563eb);
+  padding: 25px 0;
+  color: #fff;
+  z-index: 1000;
+  transition: 0.3s;
 }
 
 .sidebar .logo-box {
-    text-align: center;
-    margin-bottom: 40px;
+  padding-left: 24px;
+  margin-bottom: 35px;
 }
 
 .sidebar .logo-box img {
-    width: 180px;
-    margin-left: -50px;
+  width: 180px;
 }
 
 .sidebar ul {
-    padding: 0;
-    list-style: none;
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar ul li {
-    padding: 15px 25px;
-    display: flex;
-    gap: 12px;
-    cursor: pointer;
-    transition: 0.3s;
+.sidebar li {
+  padding: 14px 26px;
 }
 
-.sidebar ul li:hover {
-    background: rgba(255,255,255,0.15);
-    border-left: 4px solid #f1c40f;
+.sidebar li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    font-size: 16px;
-    width: 100%;
+/* Hover / Active (same logic, new tone) */
+.sidebar li.active,
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
-/* Hover style */
-.sidebar ul li:hover a {
-    color: #f1c40f;
+/* ================= OVERLAY ================= */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
 }
 
-/* Active link style */
-.sidebar ul li.active a {
-    color: #f1c40f;
-    font-weight: 600;
-}
-
-/* MAIN CONTENT */
+/* ================= MAIN ================= */
 .main-content {
-    margin-left: 270px;
-    padding: 25px;
+  margin-left: 280px;
+  padding: 28px;
+  transition: 0.3s;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header {
-    background: linear-gradient(90deg, #3498db, #1e3c72);
-    padding: 25px;
-    border-radius: 15px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  padding: 22px 26px;
+  border-radius: 22px;
+  color: #fff;
 }
 
-.header-left h2 {
-    font-size: 26px;
+/* Top row */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+/* Desktop logo hidden */
+.header-logo { display: none; }
+
+/* Toggle */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
 }
 
+/* Title + actions */
+.header-bottom {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bottom h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Right actions */
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* BUTTON */
 .home-btn {
-    background: #ff4b2b;
-    padding: 10px 18px;
-    border-radius: 25px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s ease;
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
+  padding: 8px 20px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  transition: 
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s ease;
 }
 
+/* HOVER EFFECT */
 .home-btn:hover {
-    background: linear-gradient(90deg, #ff6a3d, #ff3b2d);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(255, 76, 43, 0.4);
+  background: linear-gradient(135deg, #ed8b3a, #d40b0b);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.45);
+  transform: translateY(-2px);
 }
 
+/* ACTIVE (CLICK) FEEDBACK */
+.home-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.35);
+}
+
+/* Profile */
 .profile-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .profile-box img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 }
 
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-/* SUMMARY CARDS */
+/* ================= METRICS ================= */
 .cards {
-    margin-top: 30px;
-    display: flex;
-    gap: 25px;
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 22px;
 }
 
 .card {
-    flex: 1;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  padding: 28px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* ICON */
+.card-icon {
+  font-size: 36px;
+  color: #fff;
+}
+
+/* TITLE */
 .card h3 {
-    font-size: 17px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
 }
 
+/* NUMBER */
 .card .number {
-    font-size: 32px;
-    font-weight: 600;
+  font-size: 34px;
+  font-weight: 700;
 }
 
-
-/* PROJECT TABLE */
-.table-box {
-    margin-top: 35px;
-    background: #fff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+/* HOVER */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 55px rgba(0,0,0,0.3);
 }
 
-.table-box h3 {
-    margin-bottom: 15px;
+/* ================= CARD GRADIENTS (UPDATED COLORS) ================= */
+.gradient-income {
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.gradient-expense {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
 }
 
-table th {
-    background: #1e3c72;
-    color: #fff;
-    padding: 12px;
-    text-align: left;
+.gradient-profit {
+  background: linear-gradient(135deg, #ff3b2e, #2563eb);
 }
 
-table td {
-    background: #f9f9f9;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+.gradient-invoice {
+  background: linear-gradient(135deg, #9333ea, #2563eb);
 }
 
-.status {
-    padding: 6px 12px;
-    border-radius: 25px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-}
-
-.completed { background: #2ecc71; }
-.progress   { background: #f1c40f; color: #000; }
-.pending    { background: #e74c3c; }
-
-/* CHARTS SECTION */
-.chart-section {
-    margin-top: 35px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+/* ================= CHARTS ================= */
+.chart-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 30px;
 }
 
 .chart-box {
-    background: #fff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  height: 420px;
+  transition: 0.35s;
 }
 
-.chart-box h3 {
-    margin-bottom: 20px;
+/* HOVER COLOR UPDATED */
+.chart-box:hover {
+  border-color: #7c3aed; /* violet */
+  box-shadow: 0 22px 45px rgba(124, 58, 237, 0.25);
 }
 
-/* Make table scrollable on mobile */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+.chart-box canvas {
+  width: 100% !important;
+  height: 320px !important;
 }
 
-.table-responsive table {
-    min-width: 650px; /* Ensures table structure stays intact */
+/* ================= RESPONSIVE ================= */
+@media(max-width:1100px){
+  .cards { grid-template-columns: repeat(2,1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 480px) {
-    .table-responsive {
-        border-radius: 10px;
-        box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-    }
-}
-
-
-/* ============================================================
-   MOBILE & TABLET RESPONSIVE DESIGN (USERS PAGE)
-   ============================================================ */
-
-/* ----------- TABLET + MOBILE (max-width: 1024px) ----------- */
-@media (max-width: 1024px) {
-
-    /* Main content expands */
-    .main-content {
-        margin-left: 0;
-    }
-
-    /* Charts become single column */
-    .chart-section {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* -------------------- MOBILE (max-width: 768px) -------------------- */
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
-    /* Show toggle button */
-    .menu-toggle {
-        display: block;
-        font-size: 26px;
-        color: #fff;
-        cursor: pointer;
-    }
+  .menu-toggle { display: block; }
+  .sidebar { left: -270px; }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.show { display: block; }
 
-    /* Sidebar collapses */
-    .sidebar {
-        left: -260px;
-        width: 240px;
-        height: 100vh;
-        transition: 0.3s ease-in-out;
-        position: fixed;
-        top: 0;
-        z-index: 999;
-    }
+  .main-content { margin-left: 0; }
 
-    /* When open */
-    .sidebar.open {
-        left: 0;
-    }
+  .header { padding: 18px 20px; }
 
-    /* Background overlay */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0,0,0,0.45);
-        z-index: 998;
-    }
+  .header-logo { display: block; }
+  .header-logo img { width: 150px; }
 
-    /* Main content full width */
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
+  .header-bottom h2 { font-size: 22px; }
 
-    /* Header becomes vertical */
-    .header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: left;
-        align-items: flex-start;
-    }
+  .card {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+  }
 
-    .header-right {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+  .card-icon {
+    font-size: 42px;
+    min-width: 50px;
+  }
 
-    /* Cards stack vertically */
-    .cards {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    /* Table Responsive */
-    table th, table td {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    /* Charts stack */
-    .chart-section {
-        grid-template-columns: 1fr;
-    }
-
+  .card .number {
+    font-size: 22px;
+  }
 }
 
-/* -------------------- SMALL MOBILE (max-width: 480px) -------------------- */
-@media (max-width: 480px) {
-
-    /* Home button smaller */
-    .home-btn {
-        padding: 8px 14px;
-        font-size: 14px;
-    }
-
-    /* Profile image small */
-    .profile-box img {
-        width: 38px;
-        height: 38px;
-    }
-
-    /* Cards padding reduced */
-    .card {
-        padding: 20px;
-    }
-
-    .card h3 {
-        font-size: 15px;
-    }
-
-    .card .number {
-        font-size: 26px;
-    }
-
-    /* Chart boxes compact */
-    .chart-box {
-        padding: 20px;
-    }
-
-    .chart-box h3 {
-        font-size: 16px;
-    }
-
-    /* Table text smaller */
-    table th,
-    table td {
-        font-size: 13px;
-    }
+@media(max-width:480px){
+  .cards { grid-template-columns: 1fr; }
+  .profile-box span { display: none; }
+  .chart-box { height: auto; }
+  .chart-box canvas { height: 260px!important; }
 }
 
 </style>
@@ -394,181 +314,220 @@ table td {
 <body>
 
 <!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="logo-box">
-        <a href="index.html" class="logo-link">
-    <img src="Images/logo.webp" alt="Logo">
+<div class="sidebar" id="sidebar">
+  <div class="logo-box">
+   <a href="index.html" class="logo-link">
+  <img src="Images/logo.webp" alt="Logo">
 </a>
 
-    </div>
-
-<ul>
+  </div>
+ <ul>
     <li>
-        <a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="dashboard.html">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
     </li>
 
     <li>
-        <a href="reports.html"><i class="fa-solid fa-file-lines"></i> Reports</a>
+        <a href="reports.html">
+            <i class="fa-solid fa-file-lines"></i> Reports
+        </a>
     </li>
 
     <li>
-        <a href="analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+        <a href="analytics.html">
+            <i class="fa-solid fa-chart-pie"></i> Analytics
+        </a>
     </li>
 
     <li class="active">
-        <a href="projects.html"><i class="fa-solid fa-users"></i> Projects</a>
+        <a href="projects.html">
+            <i class="fa-solid fa-users"></i> Projects
+        </a>
     </li>
 
     <li>
-        <a href="users.html"><i class="fa-solid fa-gear"></i> Users</a>
+        <a href="users.html">
+            <i class="fa-solid fa-gear"></i> Users
+        </a>
     </li>
 </ul>
-</div>
-<div class="sidebar-overlay"></div>
 
-<!-- MAIN CONTENT -->
+</div>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- MAIN -->
 <div class="main-content">
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-left">
-            <h2>Projects Overview</h2>
-        </div>
+  <!-- HEADER -->
+  <div class="header">
 
-        <div class="header-right">
-            <div class="menu-toggle" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i>
-</div>
-            <a href="index.html" class="home-btn">Home</a>
-
-            <div class="profile-box">
-                <span>Admin</span>
-                <img src="Images/u2.webp">
-            </div>
-        </div>
+    <div class="header-top">
+      <div class="header-logo">
+        <img src="Images/logo.webp">
+      </div>
+      <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
     </div>
 
-    <!-- SUMMARY CARDS -->
-    <div class="cards">
-        <div class="card"><h3>Total Projects</h3><div class="number">135</div></div>
-        <div class="card"><h3>Completed</h3><div class="number">89</div></div>
-        <div class="card"><h3>In Progress</h3><div class="number">34</div></div>
-        <div class="card"><h3>Pending</h3><div class="number">12</div></div>
+    <div class="header-bottom">
+      <h2>Projects</h2>
+      <div class="header-actions">
+        <a href="index.html" class="home-btn">Home</a>
+        <div class="profile-box">
+          <span>Admin</span>
+          <img src="Images/profile1.webp">
+        </div>
+      </div>
     </div>
 
-    <!-- PROJECTS TABLE -->
-    <div class="table-box">
-        <h3>Project Status Table</h3>
-<div class="table-responsive">
-        <table>
-            <tr>
-                <th>Project Name</th>
-                <th>Manager</th>
-                <th>Deadline</th>
-                <th>Status</th>
-            </tr>
+  </div>
 
-            <tr>
-                <td>Website Redesign</td>
-                <td>Rahul</td>
-                <td>10 Feb 2025</td>
-                <td><span class="status completed">Completed</span></td>
-            </tr>
+<!-- ======================
+   BUSINESS SOLUTION DASHBOARD
+====================== -->
+<!-- ======================
+   PROJECT DASHBOARD CARDS
+====================== -->
+<div class="cards">
 
-            <tr>
-                <td>App Development</td>
-                <td>Priya</td>
-                <td>22 Mar 2025</td>
-                <td><span class="status progress">In Progress</span></td>
-            </tr>
+  <div class="card gradient-income">
+    <i class="fa-solid fa-diagram-project card-icon"></i>
+    <h3>Total Projects</h3>
+    <div class="number">48</div>
+  </div>
 
-            <tr>
-                <td>CRM Integration</td>
-                <td>Deepak</td>
-                <td>05 Apr 2025</td>
-                <td><span class="status pending">Pending</span></td>
-            </tr>
+  <div class="card gradient-profit">
+    <i class="fa-solid fa-circle-check card-icon"></i>
+    <h3>Completed Projects</h3>
+    <div class="number">32</div>
+  </div>
 
-            <tr>
-                <td>Marketing Campaign</td>
-                <td>Asha</td>
-                <td>18 Feb 2025</td>
-                <td><span class="status progress">In Progress</span></td>
-            </tr>
+  <div class="card gradient-expense">
+    <i class="fa-solid fa-spinner card-icon"></i>
+    <h3>Ongoing Projects</h3>
+    <div class="number">12</div>
+  </div>
 
-        </table>
-        </div>
-    </div>
-
-    <!-- CHARTS -->
-    <div class="chart-section">
-
-        <!-- Project Completion Chart -->
-        <div class="chart-box">
-            <h3>Project Completion</h3>
-            <canvas id="projectChart"></canvas>
-        </div>
-
-        <!-- Task Distribution Chart -->
-        <div class="chart-box">
-            <h3>Task Distribution</h3>
-            <canvas id="taskChart"></canvas>
-        </div>
-
-    </div>
+  <div class="card gradient-invoice">
+    <i class="fa-solid fa-clock card-icon"></i>
+    <h3>Delayed Projects</h3>
+    <div class="number">4</div>
+  </div>
 
 </div>
 
-<!-- CHART SCRIPTS -->
-<script>
-/* Project Completion (Bar Chart) */
-new Chart(document.getElementById("projectChart"), {
-    type: "bar",
-    data: {
-        labels: ["Completed", "In Progress", "Pending"],
-        datasets: [{
-            label: "Projects",
-            data: [89, 34, 12],
-            backgroundColor: ["#2ecc71", "#f1c40f", "#e74c3c"]
-        }]
-    },
-    options: { plugins:{legend:{display:false}} }
-});
+<div class="chart-grid">
 
-/* Task Distribution (Doughnut Chart) */
-new Chart(document.getElementById("taskChart"), {
-    type: "doughnut",
-    data: {
-        labels: ["Design", "Development", "Testing", "Deployment"],
-        datasets: [{
-            data: [35, 40, 15, 10],
-            backgroundColor: ["#3498db", "#1e3c72", "#f1c40f", "#ff4b2b"]
-        }]
-    }
-});
-</script>
+  <div class="chart-box">
+    <h3>Project Status Overview</h3>
+    <canvas id="p1"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Monthly Project Progress</h3>
+    <canvas id="p2"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Resource Allocation</h3>
+    <canvas id="p3"></canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Project Completion Rate</h3>
+    <canvas id="p4"></canvas>
+  </div>
+
+</div>
+
 
 <script>
-function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
-    
-    sidebar.classList.toggle('open');
-    overlay.style.display = sidebar.classList.contains('open') ? "block" : "none";
+function toggleSidebar(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
 }
+overlay.onclick = toggleSidebar;
 
-document.addEventListener("click", function(e){
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
+/* ================= RETAIL CHARTS ================= */
 
-    if (e.target === overlay) {
-        sidebar.classList.remove("open");
-        overlay.style.display = "none";
-    }
+new Chart(p1, {
+  type: "pie",
+  data: {
+    labels: ["Completed", "Ongoing", "Delayed"],
+    datasets: [{
+      data: [32, 12, 4],
+      backgroundColor: [
+        "#2563eb",
+        "#7c3aed",
+        "#ff3b2e"
+      ]
+    }]
+  },
+  options: {
+    plugins: { legend: { position: "bottom" } }
+  }
 });
+
+new Chart(p2, {
+  type: "line",
+  data: {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+    datasets: [{
+      label: "Projects Completed",
+      data: [4, 6, 5, 8, 10, 12],
+      borderColor: "#7c3aed",
+      backgroundColor: "rgba(124,58,237,0.25)",
+      fill: true,
+      tension: 0.45,
+      pointRadius: 5
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } }
+  }
+});
+
+
+new Chart(p3, {
+  type: "bar",
+  data: {
+    labels: ["Development", "Design", "Testing", "Management"],
+    datasets: [{
+      data: [45, 20, 15, 20],
+      backgroundColor: "#2563eb",
+      borderRadius: 10
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+
+
+new Chart(p4, {
+  type: "doughnut",
+  data: {
+    labels: ["Completed", "Remaining"],
+    datasets: [{
+      data: [68, 32],
+      backgroundColor: [
+        "#7c3aed",
+        "#ff3b2e"
+      ],
+      hoverOffset: 12
+    }]
+  },
+  options: {
+    cutout: "65%",
+    plugins: { legend: { position: "bottom" } }
+  }
+});
+
 </script>
-
-
 
 </body>
 </html>

@@ -3,258 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Corporate Dashboard</title>
+<title>Accounting & Finance Dashboard</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* BODY */
+/* ================= GLOBAL ================= */
+/* ================= GLOBAL ================= */
+* { box-sizing: border-box; }
+
 body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #f4f6ff;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg,#f5fbff,#eef6ff);
+  overflow-x: hidden;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: linear-gradient(180deg, #1e3c72, #2a5298, #3498db);
-    position: fixed;
-    left: 0;
-    top: 0;
-    color: #fff;
-    padding: 25px 0;
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background: linear-gradient(180deg, #ff3b2e, #7c3aed, #2563eb);
+  padding: 25px 0;
+  color: #fff;
+  z-index: 1000;
+  transition: 0.3s;
 }
 
 .sidebar .logo-box {
-    text-align: center;
-    margin-bottom: 40px;
+  padding-left: 24px;
+  margin-bottom: 35px;
 }
 
 .sidebar .logo-box img {
-    width: 180px;
-    margin-left: -50px;
+  width: 180px;
 }
 
 .sidebar ul {
-    padding: 0;
-    list-style: none;
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar ul li {
-    padding: 15px 25px;
-    display: flex;
-    gap: 12px;
-    cursor: pointer;
-    transition: 0.3s;
+.sidebar li {
+  padding: 14px 26px;
 }
 
-.sidebar ul li:hover {
-    background: rgba(255,255,255,0.15);
-    border-left: 4px solid #f1c40f;
+.sidebar li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    font-size: 16px;
-    width: 100%;
+/* Hover / Active (same logic, new tone) */
+.sidebar li.active,
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
-/* Hover style */
-.sidebar ul li:hover a {
-    color: #f1c40f;
+/* ================= OVERLAY ================= */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
 }
 
-/* Active link style */
-.sidebar ul li.active a {
-    color: #f1c40f;
-    font-weight: 600;
-}
-
-
-/* MAIN CONTENT */
+/* ================= MAIN ================= */
 .main-content {
-    margin-left: 270px;
-    padding: 25px;
+  margin-left: 280px;
+  padding: 28px;
+  transition: 0.3s;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header {
-    background: linear-gradient(90deg, #3498db, #1e3c72);
-    padding: 25px;
-    border-radius: 15px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  padding: 22px 26px;
+  border-radius: 22px;
+  color: #fff;
 }
 
-.header-left h2 {
-    font-size: 26px;
+/* Top row */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+/* Desktop logo hidden */
+.header-logo { display: none; }
+
+/* Toggle */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
 }
 
+/* Title + actions */
+.header-bottom {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bottom h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Right actions */
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* BUTTON */
 .home-btn {
-    background: #ff4b2b;
-    padding: 10px 18px;
-    border-radius: 25px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s ease;
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
+  padding: 8px 20px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  transition: 
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s ease;
 }
 
+/* HOVER EFFECT */
 .home-btn:hover {
-    background: linear-gradient(90deg, #ff6a3d, #ff3b2d);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(255, 76, 43, 0.4);
+  background: linear-gradient(135deg, #ed8b3a, #d40b0b);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.45);
+  transform: translateY(-2px);
 }
 
+/* ACTIVE (CLICK) FEEDBACK */
+.home-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.35);
+}
 
+/* Profile */
 .profile-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .profile-box img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 }
 
-/* CARDS */
+/* ================= METRICS ================= */
 .cards {
-    margin-top: 30px;
-    display: flex;
-    gap: 25px;
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 22px;
 }
 
 .card {
-    flex: 1;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  padding: 28px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* ICON */
+.card-icon {
+  font-size: 36px;
+  color: #fff;
+}
+
+/* TITLE */
 .card h3 {
-    font-size: 17px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
 }
 
+/* NUMBER */
 .card .number {
-    font-size: 32px;
-    font-weight: 600;
+  font-size: 34px;
+  font-weight: 700;
 }
 
-/* CHARTS GRID */
+/* HOVER */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 55px rgba(0,0,0,0.3);
+}
+
+/* ================= CARD GRADIENTS (UPDATED COLORS) ================= */
+.gradient-income {
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
+}
+
+.gradient-expense {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+}
+
+.gradient-profit {
+  background: linear-gradient(135deg, #ff3b2e, #2563eb);
+}
+
+.gradient-invoice {
+  background: linear-gradient(135deg, #9333ea, #2563eb);
+}
+
+/* ================= CHARTS ================= */
 .chart-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    margin-top: 35px;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 30px;
 }
 
 .chart-box {
-    background: #fff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  height: 420px;
+  transition: 0.35s;
 }
 
-.chart-box h3 {
-    margin-bottom: 15px;
+/* HOVER COLOR UPDATED */
+.chart-box:hover {
+  border-color: #7c3aed; /* violet */
+  box-shadow: 0 22px 45px rgba(124, 58, 237, 0.25);
 }
 
-
-/* ---------- MOBILE SIDEBAR TOGGLE ---------- */
-
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #fff;
+.chart-box canvas {
+  width: 100% !important;
+  height: 320px !important;
 }
 
-/* Overlay for mobile */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-    z-index: 998;
+/* ================= RESPONSIVE ================= */
+@media(max-width:1100px){
+  .cards { grid-template-columns: repeat(2,1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
 }
 
-/* Sidebar open state */
-.sidebar.open {
-    left: 0;
-    z-index: 999;
-}
-
-/* Responsive Rules */
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
-    .menu-toggle {
-        display: block;
-    }
+  .menu-toggle { display: block; }
+  .sidebar { left: -270px; }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.show { display: block; }
 
-    .sidebar {
-        left: -260px;
-        width: 240px;
-        height: 100%;
-        transition: 0.3s ease;
-        position: fixed;
-        top: 0;
-    }
+  .main-content { margin-left: 0; }
 
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
+  .header { padding: 18px 20px; }
 
-    .header {
-        flex-direction: column;
-        text-align: left;
-        gap: 15px;
-    }
+  .header-logo { display: block; }
+  .header-logo img { width: 150px; }
 
-    .header-right {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+  .header-bottom h2 { font-size: 22px; }
 
-    .cards {
-        flex-direction: column;
-    }
+  .card {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+  }
 
-    .chart-grid {
-        grid-template-columns: 1fr;
-    }
+  .card-icon {
+    font-size: 42px;
+    min-width: 50px;
+  }
 
+  .card .number {
+    font-size: 22px;
+  }
 }
 
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+@media(max-width:480px){
+  .cards { grid-template-columns: 1fr; }
+  .profile-box span { display: none; }
+  .chart-box { height: auto; }
+  .chart-box canvas { height: 260px!important; }
 }
 
 </style>
@@ -263,14 +314,14 @@ html, body {
 <body>
 
 <!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="logo-box">
-       <a href="index.html" class="logo-link">
-    <img src="Images/logo.webp" alt="Logo">
+<div class="sidebar" id="sidebar">
+  <div class="logo-box">
+   <a href="index.html" class="logo-link">
+  <img src="Images/logo.webp" alt="Logo">
 </a>
 
-    </div>
-<ul>
+  </div>
+ <ul>
     <li class="active">
         <a href="dashboard.html">
             <i class="fa-solid fa-chart-line"></i> Dashboard
@@ -304,150 +355,220 @@ html, body {
 
 </div>
 
-<div class="sidebar-overlay"></div>
+<div class="sidebar-overlay" id="overlay"></div>
 
-
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main-content">
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-left">
-            <h2>Dashboard Overview</h2>
-        </div>
+  <!-- HEADER -->
+  <div class="header">
 
-        <div class="header-right">
-            <div class="menu-toggle" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i>
+    <div class="header-top">
+      <div class="header-logo">
+        <img src="Images/logo.webp">
+      </div>
+      <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+    </div>
+
+    <div class="header-bottom">
+      <h2>Dashboard</h2>
+      <div class="header-actions">
+        <a href="index.html" class="home-btn">Home</a>
+        <div class="profile-box">
+          <span>Admin</span>
+          <img src="Images/profile1.webp">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- ======================
+   BUSINESS SOLUTION DASHBOARD
+====================== -->
+<div class="cards">
+
+  <!-- ===== BUSINESS PERFORMANCE ===== -->
+  <div class="card gradient-income">
+    <i class="fa-solid fa-briefcase card-icon"></i>
+    <h3>Active Projects</h3>
+    <div class="number">42</div>
+  </div>
+
+  <div class="card gradient-profit">
+    <i class="fa-solid fa-bullseye card-icon"></i>
+    <h3>Goals Achieved</h3>
+    <div class="number">86%</div>
+  </div>
+
+  <div class="card gradient-expense">
+    <i class="fa-solid fa-clock card-icon"></i>
+    <h3>On-Time Delivery</h3>
+    <div class="number">92%</div>
+  </div>
+
+  <div class="card gradient-invoice">
+    <i class="fa-solid fa-user-tie card-icon"></i>
+    <h3>Enterprise Clients</h3>
+    <div class="number">128</div>
+  </div>
+
+  <!-- ===== OPERATIONS & GROWTH ===== -->
+  <div class="card gradient-income">
+    <i class="fa-solid fa-chart-line card-icon"></i>
+    <h3>Revenue Growth</h3>
+    <div class="number">+18%</div>
+  </div>
+
+  <div class="card gradient-profit">
+    <i class="fa-solid fa-shield-halved card-icon"></i>
+    <h3>Compliance Score</h3>
+    <div class="number">97%</div>
+  </div>
+
+  <div class="card gradient-expense">
+    <i class="fa-solid fa-gears card-icon"></i>
+    <h3>Process Automation</h3>
+    <div class="number">24</div>
+  </div>
+
+  <div class="card gradient-invoice">
+    <i class="fa-solid fa-thumbs-up card-icon"></i>
+    <h3>Client Satisfaction</h3>
+    <div class="number">4.8 / 5</div>
+  </div>
+
 </div>
-            <a href="index.html" class="home-btn">Home</a>
 
-            <div class="profile-box">
-                <span>Admin</span>
-                <img src="Images/u2.webp">
-            </div>
-        </div>
-    </div>
 
-    <!-- CARDS -->
-    <div class="cards">
-        <div class="card"><h3>Total Users</h3><div class="number">24,560</div></div>
-        <div class="card"><h3>Revenue</h3><div class="number">$18,430</div></div>
-        <div class="card"><h3>Tickets</h3><div class="number">78</div></div>
-        <div class="card"><h3>Sales</h3><div class="number">$6,840</div></div>
-    </div>
+<!-- BUSINESS SOLUTION CHARTS -->
+<div class="chart-grid">
 
-    <!-- CHARTS GRID -->
-    <div class="chart-grid">
+  <div class="chart-box">
+    <h3>Business Growth Trend</h3>
+    <canvas id="c1"></canvas>
+  </div>
 
-        <!-- Line Chart -->
-        <div class="chart-box">
-            <h3>Line Chart</h3>
-            <canvas id="lineChart"></canvas>
-        </div>
+  <div class="chart-box">
+    <h3>Operational Cost Breakdown</h3>
+    <canvas id="c2"></canvas>
+  </div>
 
-        <!-- Bar Chart -->
-        <div class="chart-box">
-            <h3>Bar Chart</h3>
-            <canvas id="barChart"></canvas>
-        </div>
+  <div class="chart-box">
+    <h3>Client Engagement Trend</h3>
+    <canvas id="c3"></canvas>
+  </div>
 
-        <!-- Pie Chart -->
-        <div class="chart-box">
-            <h3>Pie Chart</h3>
-            <canvas id="pieChart"></canvas>
-        </div>
-
-        <!-- Doughnut Chart -->
-        <div class="chart-box">
-            <h3>Doughnut Chart</h3>
-            <canvas id="doughnutChart"></canvas>
-        </div>
-
-    </div>
+  <div class="chart-box">
+    <h3>Revenue Contribution by Service</h3>
+    <canvas id="c4"></canvas>
+  </div>
 
 </div>
 
-<!-- CHART JS -->
-<script>
-/* Line Chart */
-new Chart(document.getElementById("lineChart"), {
-    type: "line",
-    data: {
-        labels: ["Jan","Feb","Mar","Apr","May","Jun"],
-        datasets: [{
-            label: "Sales",
-            data: [12000,15000,11000,18000,22000,26000],
-            borderColor: "#3498db",
-            backgroundColor: "rgba(52,152,219,0.25)",
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: { plugins:{legend:{display:false}} }
-});
-
-/* Bar Chart */
-new Chart(document.getElementById("barChart"), {
-    type: "bar",
-    data: {
-        labels: ["Mon","Tue","Wed","Thu","Fri"],
-        datasets: [{
-            label: "Visitors",
-            data: [280,340,450,390,510],
-            backgroundColor: ["#3498db","#1e3c72","#ff4b2b","#f1c40f","#2a5298"]
-        }]
-    },
-    options: { plugins:{legend:{display:false}} }
-});
-
-/* Pie Chart */
-new Chart(document.getElementById("pieChart"), {
-    type: "pie",
-    data: {
-        labels: ["Chrome", "Firefox", "Safari", "Edge"],
-        datasets: [{
-            data: [55, 25, 15, 5],
-            backgroundColor: ["#3498db","#ff4b2b","#f1c40f","#1e3c72"]
-        }]
-    }
-});
-
-/* Doughnut Chart */
-new Chart(document.getElementById("doughnutChart"), {
-    type: "doughnut",
-    data: {
-        labels: ["Active", "Inactive"],
-        datasets: [{
-            data: [80, 20],
-            backgroundColor: ["#2a5298", "#f1c40f"]
-        }]
-    }
-});
-</script>
 
 <script>
-function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
-    
-    sidebar.classList.toggle('open');
-    overlay.style.display = sidebar.classList.contains('open') ? "block" : "none";
+function toggleSidebar(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
 }
+overlay.onclick = toggleSidebar;
 
-document.addEventListener("click", function(e){
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
+/* ================= RETAIL CHARTS ================= */
 
-    if (e.target === overlay) {
-        sidebar.classList.remove("open");
-        overlay.style.display = "none";
-    }
+new Chart(c1, {
+  type: "line",
+  data: {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [{
+      label: "Growth Index",
+      data: [62, 68, 66, 72, 78, 85],
+      borderColor: "#7c3aed",
+      backgroundColor: "rgba(124,58,237,0.25)",
+      fill: true,
+      tension: 0.45,
+      pointRadius: 5,
+      pointBackgroundColor: "#ff3b2e"
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } }
+  }
 });
+
+new Chart(c2, {
+  type: "pie",
+  data: {
+    labels: [
+      "Infrastructure",
+      "Human Resources",
+      "Technology",
+      "Marketing",
+      "Administration"
+    ],
+    datasets: [{
+      data: [30, 25, 20, 15, 10],
+      backgroundColor: [
+        "#2563eb",
+        "#7c3aed",
+        "#ff3b2e",
+        "#9333ea",
+        "#60a5fa"
+      ]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { position: "bottom" }
+    }
+  }
+});
+
+new Chart(c3, {
+  type: "bar",
+  data: {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [{
+      label: "Engagement Score",
+      data: [420, 510, 480, 560, 630, 710],
+      backgroundColor: "#2563eb",
+      borderRadius: 8
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } }
+  }
+});
+
+new Chart(c4, {
+  type: "doughnut",
+  data: {
+    labels: [
+      "Consulting",
+      "Software Solutions",
+      "Managed Services",
+      "Support & Maintenance"
+    ],
+    datasets: [{
+      data: [40, 30, 20, 10],
+      backgroundColor: [
+        "#7c3aed",
+        "#2563eb",
+        "#ff3b2e",
+        "#9333ea"
+      ],
+      hoverOffset: 10
+    }]
+  },
+  options: {
+    cutout: "65%",
+    plugins: {
+      legend: { position: "bottom" }
+    }
+  }
+});
+
 </script>
-
-
 
 </body>
 </html>

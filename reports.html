@@ -3,362 +3,325 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reports | Stackly Dashboard</title>
+<title>Accounting & Finance Dashboard</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* BODY */
+/* ================= GLOBAL ================= */
+/* ================= GLOBAL ================= */
+* { box-sizing: border-box; }
+
 body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #f4f6ff;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg,#f5fbff,#eef6ff);
+  overflow-x: hidden;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background: linear-gradient(180deg, #1e3c72, #2a5298, #3498db);
-    position: fixed;
-    left: 0;
-    top: 0;
-    color: #fff;
-    padding: 25px 0;
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background: linear-gradient(180deg, #ff3b2e, #7c3aed, #2563eb);
+  padding: 25px 0;
+  color: #fff;
+  z-index: 1000;
+  transition: 0.3s;
 }
 
 .sidebar .logo-box {
-    text-align: center;
-    margin-bottom: 40px;
+  padding-left: 24px;
+  margin-bottom: 35px;
 }
 
 .sidebar .logo-box img {
-    width: 180px;
-    margin-left: -50px;
+  width: 180px;
 }
 
 .sidebar ul {
-    padding: 0;
-    list-style: none;
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar ul li {
-    padding: 15px 25px;
-    display: flex;
-    gap: 12px;
-    cursor: pointer;
-    transition: 0.3s;
+.sidebar li {
+  padding: 14px 26px;
 }
 
-.sidebar ul li:hover {
-    background: rgba(255,255,255,0.15);
-    border-left: 4px solid #f1c40f;
+.sidebar li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    font-size: 16px;
-    width: 100%;
+/* Hover / Active (same logic, new tone) */
+.sidebar li.active,
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
-/* Hover style */
-.sidebar ul li:hover a {
-    color: #f1c40f;
+/* ================= OVERLAY ================= */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
 }
 
-/* Active link style */
-.sidebar ul li.active a {
-    color: #f1c40f;
-    font-weight: 600;
-}
-
-/* MAIN CONTENT */
+/* ================= MAIN ================= */
 .main-content {
-    margin-left: 270px;
-    padding: 25px;
+  margin-left: 280px;
+  padding: 28px;
+  transition: 0.3s;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header {
-    background: linear-gradient(90deg, #3498db, #1e3c72);
-    padding: 25px;
-    border-radius: 15px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  padding: 22px 26px;
+  border-radius: 22px;
+  color: #fff;
 }
 
-.header-left h2 {
-    font-size: 26px;
+/* Top row */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 25px;
+/* Desktop logo hidden */
+.header-logo { display: none; }
+
+/* Toggle */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
 }
 
+/* Title + actions */
+.header-bottom {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bottom h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Right actions */
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* BUTTON */
 .home-btn {
-    background: #ff4b2b;
-    padding: 10px 18px;
-    border-radius: 25px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s ease;
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
+  padding: 8px 20px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  transition: 
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s ease;
 }
 
+/* HOVER EFFECT */
 .home-btn:hover {
-    background: linear-gradient(90deg, #ff6a3d, #ff3b2d);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(255, 76, 43, 0.4);
+  background: linear-gradient(135deg, #ed8b3a, #d40b0b);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.45);
+  transform: translateY(-2px);
 }
 
+/* ACTIVE (CLICK) FEEDBACK */
+.home-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.35);
+}
 
+/* Profile */
 .profile-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .profile-box img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 }
 
-/* CARDS */
+/* ================= METRICS ================= */
 .cards {
-    margin-top: 30px;
-    display: flex;
-    gap: 25px;
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 22px;
 }
 
 .card {
-    flex: 1;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  padding: 28px;
+  border-radius: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* ICON */
+.card-icon {
+  font-size: 36px;
+  color: #fff;
+}
+
+/* TITLE */
 .card h3 {
-    font-size: 17px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
 }
 
+/* NUMBER */
 .card .number {
-    font-size: 32px;
-    font-weight: 600;
+  font-size: 34px;
+  font-weight: 700;
 }
 
-/* CHART BOXES */
-.chart-section {
-    margin-top: 35px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+/* HOVER */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 55px rgba(0,0,0,0.3);
+}
+
+/* ================= CARD GRADIENTS (UPDATED COLORS) ================= */
+.gradient-income {
+  background: linear-gradient(135deg, #ff3b2e, #7c3aed);
+}
+
+.gradient-expense {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+}
+
+.gradient-profit {
+  background: linear-gradient(135deg, #ff3b2e, #2563eb);
+}
+
+.gradient-invoice {
+  background: linear-gradient(135deg, #9333ea, #2563eb);
+}
+
+/* ================= CHARTS ================= */
+.chart-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 30px;
 }
 
 .chart-box {
-    background: #fff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  height: 420px;
+  transition: 0.35s;
 }
 
-.chart-box h3 {
-    margin-bottom: 20px;
+/* HOVER COLOR UPDATED */
+.chart-box:hover {
+  border-color: #7c3aed; /* violet */
+  box-shadow: 0 22px 45px rgba(124, 58, 237, 0.25);
 }
 
-/* Make table scrollable on mobile */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
+.chart-box canvas {
+  width: 100% !important;
+  height: 320px !important;
 }
 
-.table-responsive table {
-    min-width: 650px; /* Ensures table structure stays intact */
+/* ================= RESPONSIVE ================= */
+@media(max-width:1100px){
+  .cards { grid-template-columns: repeat(2,1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 480px) {
-    .table-responsive {
-        border-radius: 10px;
-        box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-    }
-}
-
-
-/* ============================================================
-   MOBILE & TABLET RESPONSIVE DESIGN (USERS PAGE)
-   ============================================================ */
-
-/* ----------- TABLET + MOBILE (max-width: 1024px) ----------- */
-@media (max-width: 1024px) {
-
-    /* Main content expands */
-    .main-content {
-        margin-left: 0;
-    }
-
-    /* Charts become single column */
-    .chart-section {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* -------------------- MOBILE (max-width: 768px) -------------------- */
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
 
-    /* Show toggle button */
-    .menu-toggle {
-        display: block;
-        font-size: 26px;
-        color: #fff;
-        cursor: pointer;
-    }
+  .menu-toggle { display: block; }
+  .sidebar { left: -270px; }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay.show { display: block; }
 
-    /* Sidebar collapses */
-    .sidebar {
-        left: -260px;
-        width: 240px;
-        height: 100vh;
-        transition: 0.3s ease-in-out;
-        position: fixed;
-        top: 0;
-        z-index: 999;
-    }
+  .main-content { margin-left: 0; }
 
-    /* When open */
-    .sidebar.open {
-        left: 0;
-    }
+  .header { padding: 18px 20px; }
 
-    /* Background overlay */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0,0,0,0.45);
-        z-index: 998;
-    }
+  .header-logo { display: block; }
+  .header-logo img { width: 150px; }
 
-    /* Main content full width */
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
+  .header-bottom h2 { font-size: 22px; }
 
-    /* Header becomes vertical */
-    .header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: left;
-        align-items: flex-start;
-    }
+  .card {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+  }
 
-    .header-right {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+  .card-icon {
+    font-size: 42px;
+    min-width: 50px;
+  }
 
-    /* Cards stack vertically */
-    .cards {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    /* Table Responsive */
-    table th, table td {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    /* Charts stack */
-    .chart-section {
-        grid-template-columns: 1fr;
-    }
-
+  .card .number {
+    font-size: 22px;
+  }
 }
 
-/* -------------------- SMALL MOBILE (max-width: 480px) -------------------- */
-@media (max-width: 480px) {
-
-    /* Home button smaller */
-    .home-btn {
-        padding: 8px 14px;
-        font-size: 14px;
-    }
-
-    /* Profile image small */
-    .profile-box img {
-        width: 38px;
-        height: 38px;
-    }
-
-    /* Cards padding reduced */
-    .card {
-        padding: 20px;
-    }
-
-    .card h3 {
-        font-size: 15px;
-    }
-
-    .card .number {
-        font-size: 26px;
-    }
-
-    /* Chart boxes compact */
-    .chart-box {
-        padding: 20px;
-    }
-
-    .chart-box h3 {
-        font-size: 16px;
-    }
-
-    /* Table text smaller */
-    table th,
-    table td {
-        font-size: 13px;
-    }
-}
-
-html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+@media(max-width:480px){
+  .cards { grid-template-columns: 1fr; }
+  .profile-box span { display: none; }
+  .chart-box { height: auto; }
+  .chart-box canvas { height: 260px!important; }
 }
 
 </style>
-
 </head>
+
 <body>
 
 <!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="logo-box">
-        <a href="index.html" class="logo-link">
-    <img src="Images/logo.webp" alt="Logo">
+<div class="sidebar" id="sidebar">
+  <div class="logo-box">
+   <a href="index.html" class="logo-link">
+  <img src="Images/logo.webp" alt="Logo">
 </a>
 
-    </div>
-
-<ul>
+  </div>
+ <ul>
     <li>
         <a href="dashboard.html">
             <i class="fa-solid fa-chart-line"></i> Dashboard
@@ -389,114 +352,185 @@ html, body {
         </a>
     </li>
 </ul>
+
 </div>
-<div class="sidebar-overlay"></div>
-<!-- MAIN CONTENT -->
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<!-- MAIN -->
 <div class="main-content">
 
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-left">
-            <h2>Reports Overview</h2>
-        </div>
+  <!-- HEADER -->
+  <div class="header">
 
-        <div class="header-right">
-            <div class="menu-toggle" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i>
+    <div class="header-top">
+      <div class="header-logo">
+        <img src="Images/logo.webp">
+      </div>
+      <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
+    </div>
+
+    <div class="header-bottom">
+      <h2>Reports</h2>
+      <div class="header-actions">
+        <a href="index.html" class="home-btn">Home</a>
+        <div class="profile-box">
+          <span>Admin</span>
+          <img src="Images/profile1.webp">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- ======================
+   BUSINESS SOLUTION DASHBOARD
+====================== -->
+<!-- ======================
+   REPORT DASHBOARD CARDS
+====================== -->
+<div class="cards">
+
+  <div class="card gradient-income">
+    <i class="fa-solid fa-file-lines card-icon"></i>
+    <h3>Monthly Performance Report</h3>
+    <div class="number">Available</div>
+  </div>
+
+  <div class="card gradient-profit">
+    <i class="fa-solid fa-chart-pie card-icon"></i>
+    <h3>Financial Summary Report</h3>
+    <div class="number">2025</div>
+  </div>
+
+  <div class="card gradient-expense">
+    <i class="fa-solid fa-chart-line card-icon"></i>
+    <h3>Operational Analysis</h3>
+    <div class="number">Updated</div>
+  </div>
+
+  <div class="card gradient-invoice">
+    <i class="fa-solid fa-clipboard-check card-icon"></i>
+    <h3>Compliance & Audit Report</h3>
+    <div class="number">Completed</div>
+  </div>
+
 </div>
-            <a href="index.html" class="home-btn">Home</a>
 
-            <div class="profile-box">
-                <span>Admin</span>
-                <img src="Images/u2.webp">
-            </div>
-        </div>
-    </div>
+<!-- REPORT CHARTS -->
+<div class="chart-grid">
 
-    <!-- CARDS -->
-    <div class="cards">
-        <div class="card"><h3>Daily Reports</h3><div class="number">312</div></div>
-        <div class="card"><h3>Monthly Reports</h3><div class="number">1,284</div></div>
-        <div class="card"><h3>CSV Exports</h3><div class="number">874</div></div>
-        <div class="card"><h3>PDF Downloads</h3><div class="number">542</div></div>
-    </div>
+  <div class="chart-box">
+    <h3>Monthly Performance Report</h3>
+    <canvas id="r1"></canvas>
+  </div>
 
-    <!-- CHARTS -->
-    <div class="chart-section">
+  <div class="chart-box">
+    <h3>Financial Summary Report</h3>
+    <canvas id="r2"></canvas>
+  </div>
 
-        <!-- Sales Report -->
-        <div class="chart-box">
-            <h3>Sales Report</h3>
-            <canvas id="salesReportChart"></canvas>
-        </div>
+  <div class="chart-box">
+    <h3>Operational Efficiency Report</h3>
+    <canvas id="r3"></canvas>
+  </div>
 
-        <!-- User Report -->
-        <div class="chart-box">
-            <h3>User Activity Report</h3>
-            <canvas id="userReportChart"></canvas>
-        </div>
-
-    </div>
+  <div class="chart-box">
+    <h3>Compliance & Audit Status</h3>
+    <canvas id="r4"></canvas>
+  </div>
 
 </div>
 
 
-<!-- CHART JS SCRIPTS -->
 <script>
-/* Sales Report (Bar Chart) */
-new Chart(document.getElementById("salesReportChart"), {
-    type: "bar",
-    data: {
-        labels: ["Jan","Feb","Mar","Apr","May","Jun"],
-        datasets: [{
-            label: "Sales (K)",
-            data: [12, 15, 10, 18, 22, 26],
-            backgroundColor: ["#3498db","#1e3c72","#ff4b2b","#f1c40f","#2a5298","#3498db"]
-        }]
-    },
-    options: { plugins:{legend:{display:false}} }
-});
-
-/* User Activity Report (Line Chart) */
-new Chart(document.getElementById("userReportChart"), {
-    type: "line",
-    data: {
-        labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
-        datasets: [{
-            label: "Active Users",
-            data: [120, 150, 180, 130, 200, 250, 300],
-            borderColor: "#3498db",
-            backgroundColor: "rgba(52,152,219,0.25)",
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: { plugins:{legend:{display:false}} }
-});
-</script>
-
-<script>
-function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
-    
-    sidebar.classList.toggle('open');
-    overlay.style.display = sidebar.classList.contains('open') ? "block" : "none";
+function toggleSidebar(){
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
 }
+overlay.onclick = toggleSidebar;
 
-document.addEventListener("click", function(e){
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.sidebar-overlay');
+/* ================= RETAIL CHARTS ================= */
 
-    if (e.target === overlay) {
-        sidebar.classList.remove("open");
-        overlay.style.display = "none";
-    }
+new Chart(r1, {
+  type: "line",
+  data: {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+    datasets: [{
+      label: "Performance Index",
+      data: [68, 72, 70, 76, 82, 88],
+      borderColor: "#7c3aed",
+      backgroundColor: "rgba(124,58,237,0.25)",
+      fill: true,
+      tension: 0.45,
+      pointBackgroundColor: "#ff3b2e",
+      pointRadius: 5
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } }
+  }
 });
+
+new Chart(r2, {
+  type: "bar",
+  data: {
+    labels: ["Revenue", "Expenses", "Profit"],
+    datasets: [{
+      data: [480000, 210000, 270000],
+      backgroundColor: ["#2563eb", "#ff3b2e", "#7c3aed"],
+      borderRadius: 10
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } }
+  }
+});
+
+
+new Chart(r3, {
+  type: "doughnut",
+  data: {
+    labels: ["Automated", "Manual", "Optimized"],
+    datasets: [{
+      data: [55, 25, 20],
+      backgroundColor: [
+        "#2563eb",
+        "#ff3b2e",
+        "#7c3aed"
+      ],
+      hoverOffset: 10
+    }]
+  },
+  options: {
+    cutout: "65%",
+    plugins: {
+      legend: { position: "bottom" }
+    }
+  }
+});
+
+new Chart(r4, {
+  type: "pie",
+  data: {
+    labels: ["Compliant", "Pending", "Issues Found"],
+    datasets: [{
+      data: [75, 15, 10],
+      backgroundColor: [
+        "#2563eb",
+        "#7c3aed",
+        "#ff3b2e"
+      ]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { position: "bottom" }
+    }
+  }
+});
+
 </script>
-
-
 
 </body>
 </html>
